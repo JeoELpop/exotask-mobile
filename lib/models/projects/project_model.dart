@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 
 Future getProjects(token) async{
   var url = Uri.parse('https://localhost:7042/GetProjcts');
@@ -45,5 +43,4 @@ class ProjectModel
         "name": name,
         "id": id,
     };
-
 }

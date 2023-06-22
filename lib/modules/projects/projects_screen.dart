@@ -1,12 +1,11 @@
-import 'dart:convert';
-import 'dart:math';
-import 'package:exotask/shared/network/remote/remote_service.dart';
+import 'package:exotask/modules/workspace/workspace_screen.dart';
 import 'package:exotask/models/projects/project_model.dart';
 import 'package:exotask/models/user/user_model.dart';
 import 'package:exotask/modules/home/homepage.dart';
-import 'package:exotask/modules/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:exotask/shared/components/constants.dart';
+
 
 Future<String?> getToken() async
 {
@@ -52,12 +51,11 @@ var isLoading = false;
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     forceLogin(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xff152642),
       appBar: AppBar(
         backgroundColor: Color (0xff2f4562),
         elevation: 0,
@@ -135,38 +133,46 @@ var isLoading = false;
   }
 
 //arrow function
-  Widget buildProjectItem(ProjectModel user) => Row(
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomEnd,
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${user.name}',
-                  style: TextStyle(
-                    color: Colors.grey[300],
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                
-                Divider(
-                      color: Colors.grey[300],
-                    ),
-              ],
+  Widget buildProjectItem(ProjectModel user) => InkWell(
+    onTap: (){
+      currentProject = user.name;
+      currentProjectID = user.id;
+
+      Navigator.popAndPushNamed(context, WorkSpaceScreen.id);
+    },
+    child: Row(
+          children: [
+            Stack(
+              alignment: AlignmentDirectional.bottomEnd,
             ),
-          ),
-        ],
-      );
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${user.name}',
+                    style: TextStyle(
+                      color: Colors.grey[300],
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  
+                  Divider(
+                        color: Colors.grey[300],
+                      ),
+                ],
+              ),
+            ),
+          ],
+        ),
+  );
 }

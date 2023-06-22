@@ -1,4 +1,5 @@
 import 'package:exotask/models/task/post.dart';
+import 'package:exotask/modules/workspace/workspace_screen.dart';
 import 'package:exotask/shared/components/constants.dart';
 import 'package:exotask/shared/network/remote/remote_service.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,9 @@ class _TaskState extends State<Task> {
                 Icons.arrow_back,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.popAndPushNamed(context, WorkSpaceScreen.id);
+            },
           ),
         ],
       ),
@@ -134,9 +137,6 @@ class _TaskState extends State<Task> {
                                   color: KTertiaryColor),
                                 overflow: TextOverflow.ellipsis
                                 ),
-
-
-
                               ],
                             ),
                           ),

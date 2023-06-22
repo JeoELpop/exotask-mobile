@@ -38,127 +38,137 @@ class _LoginScreenState extends State<LoginScreen>
     forcered(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: kMainColor,
+        elevation: 0,
+        titleSpacing: 20,
         title: Text('Login'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key:  formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  defaultFormField(
-                    controller: emailController,
-                    type: TextInputType.emailAddress,
-                    label: 'Email Address',
-                    prefix: Icons.email,
-                    validate: (value)
-                    {
-                      if(value!.isEmpty)
-                      {
-                        return 'Email Address must not be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  defaultFormField(
-                    controller: passwordController,
-                    type: TextInputType.visiblePassword,
-                    label: 'Password',
-                    prefix: Icons.lock,
-                    suffix: isPassword ? Icons.visibility : Icons.visibility_off,
-                    isPassword: isPassword,
-                    suffixPressed: () 
-                    {
-                      setState(() 
-                      {
-                        isPassword = !isPassword;
-                      });
-                    },
-                    validate: (value)
-                    {
-                      if(value!.isEmpty)
-                      {
-                        return 'Password must not be empty';
-                      }
-                      return null;
-                    },
-                  ),
-                   SizedBox(
-                    height: 20,
-                  ),
-                  defaultButton(
-                    text: 'Login',
-                    function: () async
-                    {
-                      if(formKey.currentState!.validate())
-                      {
-                        // print(emailController.text);
-                        // print(passwordController.text);
-                        UserModel user = await login(email: emailController.text, password: passwordController.text);
-                        final token = await getToken();
-                        if(token != null){
-                          Navigator.popAndPushNamed(context, ProjectsScreen.id);
-                        }else{
-                          setState(() 
-                      {
-                        xcolor != xcolor;
-                      });
-                          xcolor= KFColor;
-                        }
-                      }
-                    },
-                    radius: 15,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Don\'t have an account?',
+      body: Container(
+        color: Color(0xff152642),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Form(
+                key:  formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, RegisterScreen.id);
-                        },
-                        child: Text(
-                          'Register Now',
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    defaultFormField(
+                      controller: emailController,
+                      type: TextInputType.emailAddress,
+                      label: 'Email Address',
+                      prefix: Icons.email,
+                      validate: (value)
+                      {
+                        if(value!.isEmpty)
+                        {
+                          return 'Email Address must not be empty';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    defaultFormField(
+                      controller: passwordController,
+                      type: TextInputType.visiblePassword,
+                      label: 'Password',
+                      prefix: Icons.lock,
+                      suffix: isPassword ? Icons.visibility : Icons.visibility_off,
+                      isPassword: isPassword,
+                      suffixPressed: () 
+                      {
+                        setState(() 
+                        {
+                          isPassword = !isPassword;
+                        });
+                      },
+                      validate: (value)
+                      {
+                        if(value!.isEmpty)
+                        {
+                          return 'Password must not be empty';
+                        }
+                        return null;
+                      },
+                    ),
+                     SizedBox(
+                      height: 20,
+                    ),
+                    defaultButton(
+                      text: 'Login',
+                      function: () async
+                      {
+                        if(formKey.currentState!.validate())
+                        {
+                          // print(emailController.text);
+                          // print(passwordController.text);
+                          UserModel user = await login(email: emailController.text, password: passwordController.text);
+                          final token = await getToken();
+                          if(token != null){
+                            Navigator.popAndPushNamed(context, ProjectsScreen.id);
+                          }else{
+                            setState(() 
+                        {
+                          xcolor != xcolor;
+                        });
+                            xcolor= KFColor;
+                          }
+                        }
+                      },
+                      radius: 15,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don\'t have an account?',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, RegisterScreen.id);
+                          },
+                          child: Text(
+                            'Register Now',
+                            
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Error in user name or password',
+                        style: TextStyle(color: Color(0xff152642),
                           
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Error in user name or password',
-                      style: TextStyle(color: xcolor,
-                        
-                      ),
-                      ),
-                    ],
-                  ),  
-               ],
+                        ),
+                      ],
+                    ),  
+                 ],
+                ),
               ),
             ),
           ),

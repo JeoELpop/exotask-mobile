@@ -1,6 +1,7 @@
+import 'package:exotask/modules/webview_screen/webview_screen.dart';
 import 'package:exotask/shared/components/constants.dart';
 import 'package:flutter/material.dart';
-
+import 'package:exotask/modules/webview_screen/webview_screen.dart';
   
 class Contact extends StatelessWidget {
   static String id = 'Contact';
@@ -57,9 +58,10 @@ class Contact extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             TextButton(
-                        onPressed: (){},
+                              onPressed: (){
+                                // Navigator.pushNamed(context, WebViewScreen.id);
+                              },
                         child: Text(
                           'Email: Exotask@Gmail.com',
                           style: TextStyle(
@@ -68,7 +70,8 @@ class Contact extends StatelessWidget {
                               ),
                           
                         ),
-                      ),
+                      )
+                      ,
                             SizedBox(
                               height: 20,
                             ),

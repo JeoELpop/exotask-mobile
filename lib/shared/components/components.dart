@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 Widget defaultButton({
   double width =double.infinity, 
-  Color background = Colors.blue,
+  Color background = kSecondaryColor,
   bool isUpperCase = true,
   double radius = 0.0,
   void Function()? function,
@@ -33,22 +33,33 @@ Widget defaultFormField({
   required TextInputType? type,
   bool isPassword = false,
   required String label,
+  String labelcolor = 'white',
   required IconData prefix,
   IconData? suffix,
+  String prefixcolor = 'white',
+  String suffixcolor = 'white',
   Function? suffixPressed,
-  String? Function(String?)? validate,
+  String? Function(String?)? validate, 
+
 }) => TextFormField(
+                    style: TextStyle(color: Colors.white),
                     validator: validate,
                     controller: controller,
                     keyboardType: type,
                     obscureText: isPassword,
                     decoration: InputDecoration(
                       labelText: label,
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      ),
                       prefixIcon: Icon(prefix),
+                      prefixIconColor: Colors.white,
                       suffixIcon: suffix != null ? IconButton
                       ( onPressed: suffixPressed  as void Function  ()?,
                         icon: Icon(
-                        suffix,)):null,
+                        suffix,
+                        color: Colors.white,
+                        )):null,
                       border: OutlineInputBorder(),
                     ),
                   );
