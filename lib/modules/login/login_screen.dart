@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen>
   var formKey = GlobalKey<FormState>();
   bool isPassword = true;
   static String id = 'LoginScreen';
-  var xcolor =KTertiaryColor;
+  var xcolor = Color(0xff152642);
 
   @override
   Widget build(BuildContext context)
@@ -161,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Error in user name or password',
-                        style: TextStyle(color: Color(0xff152642),
+                        style: TextStyle(color: xcolor,
                           
                         ),
                         ),

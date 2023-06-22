@@ -31,7 +31,8 @@ class WorkSpaceScreen extends StatefulWidget {
 
 class _WorkSpaceScreenState extends State<WorkSpaceScreen> {
 
-  List<WorkspaceModel>? proj = [];
+  List<WorkSpasceforProjectData>? proj = [];
+  List<WorkspaceModel>? workspaces = [];
 
 var isLoading = false;
   @override
@@ -40,7 +41,17 @@ var isLoading = false;
 
     //fetch data from api
     getWorkSpaceList();
+    getProjectList();
 
+  }
+  getProjectList() async {
+    final token = await getToken();
+    workspaces = await getProject(token);
+    if(workspaces != null) {
+      setState(() {
+        isLoading = true;
+      });
+    }
   }
 
   getWorkSpaceList() async {
@@ -67,8 +78,7 @@ var isLoading = false;
             SizedBox(
               width: 15,
             ),
-            Text(
-              '${proj?.first.projectName}',
+            Text('${workspaces?.first.projectName}',
               style: TextStyle(
                 color: KTertiaryColor,
                 fontSize: 20,
@@ -116,7 +126,8 @@ var isLoading = false;
                     SizedBox(
                       width: 10,
                     ),
-                    Text('${proj?.first.descrtpion}'),
+                    Text('${workspaces?.first.descrtpion}',
+                      ),
                   ],
                 ),
               ),
@@ -127,7 +138,7 @@ var isLoading = false;
                 itemCount: proj!.length,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemBuilder: (context, index) => buildProjectItem(proj![index],index),
+                itemBuilder: (context, index) => buildProjectItem(proj![index]),
                 separatorBuilder: (context, index) => SizedBox(
                   height: 15,
                 ),
@@ -142,10 +153,11 @@ var isLoading = false;
   
 
 //arrow function
-  Widget buildProjectItem(WorkspaceModel proj,int index) => InkWell(
+  Widget buildProjectItem(WorkSpasceforProjectData proj) => InkWell(
     onTap: (){
-      currentWorkspace = '${proj.workSpasceforProject?[index]?.workSpaceName}';
-      currentWorkspaceID = proj.workSpasceforProject?[index]?.workspasceid??0;
+      currentWorkspace = '${proj.workSpaceName}';
+      currentWorkspaceID = proj.workspasceid??0;
+      print(currentWorkspaceID);
 
       Navigator.popAndPushNamed(context, Task.id);
     },
@@ -162,7 +174,7 @@ var isLoading = false;
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                     '${proj.workSpasceforProject?[index]?.workSpaceName}',
+                     '${proj.workSpaceName}',
                     style: TextStyle(
                       color: KTertiaryColor,
                       fontSize: 16,

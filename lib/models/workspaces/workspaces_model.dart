@@ -13,10 +13,27 @@ Future getworkspaces(token) async{
   );
   if(response.body != null){    
     final body = await jsonDecode(response.body);
-    var json = response.body;
-    return workspaceFromJson(json);
-
-
+    var json = await workspaceFromJson(response.body);
+    var a7a = json[0].workSpasceforProject;
+    print(a7a);
+    return (a7a);
+}
+    else {
+      return 'error';
+    }
+}
+Future getProject(token) async{
+   var url = Uri.parse('https://localhost:7042/GetDetialesProjects?projectId=$currentProjectID');
+    var response1 = await http.get(
+    url,
+    headers: {
+      'Authorization' : 'Bearer $token' 
+    }
+  );
+  if(response1.body != null){    
+    final body = await jsonDecode(response1.body);
+    var json = await workspaceFromJson(response1.body);
+    return (json);
 }
     else {
       return 'error';
