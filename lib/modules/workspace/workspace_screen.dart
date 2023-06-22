@@ -177,7 +177,7 @@ var isLoading = false;
                      '${proj.workSpaceName}',
                     style: TextStyle(
                       color: KTertiaryColor,
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                     maxLines: 1,
@@ -186,32 +186,9 @@ var isLoading = false;
                   SizedBox(
                     height: 5,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
-                          width: 7,
-                          height: 7,
-                          decoration: BoxDecoration(
-                              color: Colors.blue, shape: BoxShape.circle),
-                        ),
-                      ),
-                      Text(
-                        '02:00 PM',
-                        style: TextStyle(
-                          color: KTertiaryColor,
-                        )
-                      ),
-                    ],
-                  ),
+                  Divider(
+                            color: Colors.grey[300],
+                          ),
                 ],
               ),
             ),
