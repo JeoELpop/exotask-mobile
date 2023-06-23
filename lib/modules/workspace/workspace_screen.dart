@@ -78,7 +78,7 @@ var isLoading = false;
             SizedBox(
               width: 15,
             ),
-            Text('${workspaces?.first.projectName}',
+            Text(currentProject,
               style: TextStyle(
                 color: KTertiaryColor,
                 fontSize: 20,
@@ -115,22 +115,6 @@ var isLoading = false;
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.grey[300],
-                ),
-                padding: EdgeInsets.all(5),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('${workspaces?.first.descrtpion}',
-                      ),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: 20,
               ),

@@ -3,27 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:exotask/shared/components/constants.dart';
 
 
-Future getworkspaces(token) async{
-   var url = Uri.parse('https://localhost:7042/GetDetialesProjects?projectId=$currentProjectID');
-    var response = await http.get(
-    url,
-    headers: {
-      'Authorization' : 'Bearer $token' 
-    }
-  );
-  if(response.body != null){    
-    final body = await jsonDecode(response.body);
-    var json = await workspaceFromJson(response.body);
-    var a7a = json[0].workSpasceforProject;
-    print(a7a);
-    return (a7a);
-}
-    else {
-      return 'error';
-    }
-}
 Future getProject(token) async{
-   var url = Uri.parse('https://localhost:7042/GetDetialesProjects?projectId=$currentProjectID');
+   var url = Uri.parse('https://10.0.2.2:7042/GetDetialesProjects?projectId=$currentProjectID');
     var response1 = await http.get(
     url,
     headers: {
@@ -39,6 +20,26 @@ Future getProject(token) async{
       return 'error';
     }
 }
+
+Future getworkspaces(token) async{
+   var url = Uri.parse('http://joeddenn-001-site1.itempurl.com/GetProjct?projectId=$currentProjectID');
+    var response = await http.get(
+    url,
+    headers: {
+      'Authorization' : 'Bearer $token' 
+    }
+  );
+  if(response.body != null){    
+    final body = await jsonDecode(response.body);
+    var json = await workspaceFromJson(response.body);
+    var wks = json[0].workSpasceforProject;
+    return (wks);
+}
+    else {
+      return 'error';
+    }
+}
+
 List<WorkspaceModel> workspaceFromJson(String str) => 
 List<WorkspaceModel>.from(json.decode(str).map((x) => 
 WorkspaceModel.fromJson(x)));
@@ -63,8 +64,6 @@ class WorkspaceModel
 WorkspaceModel.fromJson(Map<String, dynamic> json){
     projectName = json['projectName'];
     descrtpion = json['descrtpion'];
-    // workSpasceforProject = List.from(
-    //   json['workSpasceforProject']).map((e)=>WorkSpasceforProject.fromJson(e)).toList();
       if (json['workSpasceforProject'] != null) {
          workSpasceforProject = <WorkSpasceforProjectData>[];
          json['workSpasceforProject'].forEach((v) {

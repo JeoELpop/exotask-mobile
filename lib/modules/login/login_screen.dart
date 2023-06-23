@@ -6,8 +6,6 @@ import 'package:exotask/shared/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../home/homepage.dart';
-
 void forcered(context) async {
   bool loggedin = await isLoggedIn();
   if(loggedin){

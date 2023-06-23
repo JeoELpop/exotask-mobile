@@ -1,153 +1,109 @@
 import 'package:exotask/models/task/post.dart';
+import 'package:exotask/models/user/user_model.dart';
+import 'package:exotask/modules/home/homepage.dart';
 import 'package:exotask/modules/workspace/workspace_screen.dart';
 import 'package:exotask/shared/components/constants.dart';
-import 'package:exotask/shared/network/remote/remote_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+  Future<String?> getToken() async  
+{
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  return token;
+}
+
+void forceLogin(context) async {
+  bool loggedin = await isLoggedIn();
+  if(!loggedin){
+    Navigator.popAndPushNamed(context, HomePage.id);
+  }
+}
 
 class Task extends StatefulWidget {
   static String id = 'Task';
+
+  const Task({super.key});
+  
   @override
   State<Task> createState() => _TaskState();
 }
 
-listname(id){
-  if(id == 1){
-    return 'TODO';
-  }
-  else if(id == 2){
-    return 'DOING';
-  }
-  else if(id == 3){
-    return 'DONE';
-  }
-  else{
-    return 'list';
-  }
-}
-
 class _TaskState extends State<Task> {
-  List<Post>? posts = [];
-  var isLoading = false;
+
+List<TaskDto> _tasks = [];
+
   @override
   void initState() {
     super.initState();
-
-    //fetch data from api
-    getData();
+    _loadTasks();
   }
-  getData() async {
-    posts = await RemoteService().getPosts();
-    if(posts != null) {
+
+  Future<void> _loadTasks() async {
+    try {
+      final token = await getToken();
+      List<TaskDto> tasks = await getPosts(token);
       setState(() {
-        isLoading = true;
+        _tasks = tasks;
       });
+    } catch (e) {
+      print('Error loading tasks: $e');
     }
   }
-  @override
+
+    @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    forceLogin(context);
+    return Scaffold(
+      backgroundColor: kMainColor,
       appBar: AppBar(
-        backgroundColor: kMainColor,
+        backgroundColor: kSecondaryColor,
                   elevation: 0,
                   titleSpacing: 20,
-        title: const Text('Tasks'),
-        actions: [
-          IconButton(
-            icon: CircleAvatar(
-              backgroundColor: kMainColor,
-              radius: 15,
-              child: Icon(
-                Icons.arrow_back,
-              ),
-            ),
-            onPressed: () {
-              Navigator.popAndPushNamed(context, WorkSpaceScreen.id);
-            },
-          ),
-        ],
+        title: Text(currentWorkspace),
       ),
-      body:
-          ListView.builder(
-            itemCount: posts!.length,
-            itemBuilder: (context, index) {
-              return Container(
-                color: kSecondaryColor,
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            color: kMainColor,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(listname(posts![index].id),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: KTertiaryColor,
-                                  fontSize: 20 , 
-                                fontWeight: FontWeight.bold),
-                                ),
-                                Text(posts![index].title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: KTertiaryColor,
-                                  fontSize: 20 , 
-                                fontWeight: FontWeight.bold), ),
-                                Text(posts![index+1].body,
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: KTertiaryColor),
-                                overflow: TextOverflow.ellipsis
-                                ),
-                                Divider(
-                            color: Colors.grey[300],
-                          ),
-                          Text(posts![index+1].title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: KTertiaryColor,
-                                  fontSize: 20 , 
-                                fontWeight: FontWeight.bold), ),
-                                Text(posts![index].body,
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: KTertiaryColor),
-                                overflow: TextOverflow.ellipsis
-                                ),
-                                Divider(
-                            color: Colors.grey[300],
-                          ),
-                          Text(posts![index+2].title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: KTertiaryColor,
-                                  fontSize: 20 , 
-                                fontWeight: FontWeight.bold), ),
-                                Text(posts![index+2].body,
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: KTertiaryColor),
-                                overflow: TextOverflow.ellipsis
-                                ),
-                              ],
+      body: ListView.builder(
+        itemCount: _tasks.length,
+        itemBuilder: (BuildContext context, int index) {
+          TaskDto task = _tasks[index];
+          return Card(
+            color: kMainColor,
+            child: Column(
+              children: [
+                ListTile(
+                  title:
+                  Text(task.title ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: KTertiaryColor,
+                        fontSize: 20 , 
+                      fontWeight: FontWeight.bold), ),
+                            subtitle: Text(task.descrpiton ?? '',
+                            maxLines: 5,
+                            style: TextStyle(
+                              color: KTertiaryColor),
+                            overflow: TextOverflow.ellipsis
                             ),
-                          ),
-                        ],
+                            trailing: Text(task.status ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: KTertiaryColor,
+                              fontSize: 20 , 
+                            fontWeight: FontWeight.bold),
+                            ),
                       ),
-                    ),  
-                  ],
-                ),
-              );
-            },
-          )
+                      Divider(
+                            color: Colors.grey[300],
+                          ),
+              ], 
+            ),
+                  
+          );
+        },
+      ),
     );
   }
 }

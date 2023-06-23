@@ -4,7 +4,6 @@ import 'package:exotask/modules/register/register_screen.dart';
 import 'package:exotask/shared/components/components.dart';
 import 'package:exotask/shared/components/constants.dart';
 import 'package:flutter/material.dart';
-
 import '../contact/contact.dart';
 
 class HomePage extends StatelessWidget
@@ -165,13 +164,6 @@ class HomePage extends StatelessWidget
                               text: 'AboutUs',
                               screen: AboutUs.id,
                               context: context, 
-                            ),
-                            defaultIconButton(
-                              icon: Icons.troubleshoot,
-                              text: 'Reparing',
-                              screen: LoginScreen.id, 
-                              context: context, 
-
                             ),
                           ],
                           ),

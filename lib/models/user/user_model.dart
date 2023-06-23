@@ -28,7 +28,7 @@ Future<UserModel> register({
 }) async
 {
 try{
-    var url = Uri.parse('https://localhost:7042/api/User/Register');
+    var url = Uri.parse('http://joeddenn-001-site1.itempurl.com/api/User/Register');
     var response = await http.post(
       url,
       body: {
@@ -73,7 +73,7 @@ Future<UserModel> login({
 }) async
 {
   try{
-   var url = Uri.parse('https://localhost:7042/api/User/Login');
+   var url = Uri.parse('http://joeddenn-001-site1.itempurl.com/api/User/Login');
   var response = await http.post(
     url,
     body: {
